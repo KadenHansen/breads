@@ -1,8 +1,15 @@
 const express = require("express")
-const breads = express.Router()
+const bread = express.Router()
 
-breads.get("/", (req, res) => {
+//Index
+bread.get("/", (req, res) => {
+    // res.render("index")
     res.send("Breads Page")
 })
 
-module.exports = breads
+//Show
+bread.get("/:arrayIndex", (req, res) => {
+    res.send(req.params.arrayIndex)
+})
+
+module.exports = bread
