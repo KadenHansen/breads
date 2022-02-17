@@ -8,7 +8,9 @@ function Default(html) {
         </head>
         <body>
             <h1>HTML Rendered!!</h1>
-            <div className="container"></div>
+            <div className="container">
+                {html.children}
+            </div>
         </body>
         </html>
     )
