@@ -7,9 +7,13 @@ function Default(html) {
             <title>Document</title>
         </head>
         <body>
-            <h1>HTML Rendered!!</h1>
-            <div className="container">
-                {html.children}
+            <div className="wrapper">
+                <header>
+                    <h1><a href="/bread">BreadCRUD</a></h1>
+                </header>
+                <div className="container">
+                    {html.children}
+                </div>
             </div>
         </body>
         </html>
