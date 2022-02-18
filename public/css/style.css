@@ -6,6 +6,14 @@ body {
     background-color: floralwhite;
 }
 
+#home-page {
+    background-color: blanchedalmond;
+    text-align: center;
+    display: block;
+    color: black !important;
+    text-decoration: none;
+}
+
 img {
     width: 50%;
     display: block;

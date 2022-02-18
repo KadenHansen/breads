@@ -14,6 +14,24 @@ breads.get("/", (req, res) => {
     )
 })
 
+
+breads.post("/", (req, res) => {
+    if(!req.body.image) {
+        req.body.image = "/images/bread.jfif"
+    }
+    if(req.body.hasGluten === "on") {
+        req.body.hasGluten === "true"
+    } else {
+        req.body.hasGluten === "false"
+    }
+    Bread.push(req.body)
+    res.redirect("/bread")
+})
+
+breads.get("/new", (req, res) => {
+    res.render("new")
+})
+
 //Show
 breads.get("/:arrayIndex", (req, res) => {
     if(Bread[req.params.arrayIndex]) {
@@ -23,16 +41,6 @@ breads.get("/:arrayIndex", (req, res) => {
     } else {
         res.render("error404")
     }
-})
-
-breads.post("/", (req, res) => {
-    if(req.body.hasGluten === "on") {
-        req.body.hasGluten === "true"
-    } else {
-        req.body.hasGluten === "false"
-    }
-    Bread.push(req.body)
-    res.send(Bread)
 })
 
 module.exports = breads

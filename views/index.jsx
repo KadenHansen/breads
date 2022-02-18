@@ -18,6 +18,9 @@ function Index () {
               })
             }
           </ul>
+          <a href="/bread/new">
+            <button>Add a Bread</button>
+          </a>
       </Default>
     )
 }
