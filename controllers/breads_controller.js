@@ -28,19 +28,27 @@ breads.post("/", (req, res) => {
     res.redirect("/bread")
 })
 
+
 breads.get("/new", (req, res) => {
     res.render("new")
 })
+
 
 //Show
 breads.get("/:arrayIndex", (req, res) => {
     if(Bread[req.params.arrayIndex]) {
         res.render("show", {
-            bread: Bread[req.params.arrayIndex]
+            bread: Bread[req.params.arrayIndex],
+            index: req.params.arrayIndex
         })
     } else {
         res.render("error404")
     }
+})
+
+breads.delete("/:arrayIndex", (req, res) => {
+    Bread.splice(req.params.arrayIndex, 1)
+    res.redirect("/bread")
 })
 
 module.exports = breads
