@@ -5,7 +5,7 @@ function edit ({bread, index}) {
     return (
         <Def>
             <h2>Edit Bread</h2>
-            <form action={`/bread/${index}/edit`}>
+            <form action={`/bread/${index}?_method=PUT`} method="POST">
                 <label htmlFor="name">Name</label>
                 <input
                     type="text"
