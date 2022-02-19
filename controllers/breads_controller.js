@@ -9,7 +9,6 @@ breads.get("/", (req, res) => {
     res.render("index", 
         {
             breads: Bread,
-            title: "Index Page"
         }
     )
 })
@@ -31,6 +30,23 @@ breads.post("/", (req, res) => {
 
 breads.get("/new", (req, res) => {
     res.render("new")
+})
+
+breads.get("/:arrayIndex/edit", (req, res) => {
+        res.render("edit", {
+            bread: Bread[req.params.arrayIndex],
+            index: req.params.arrayIndex
+        })
+})
+
+breads.put("/:arrayIndex", (req, res) => {
+    if(req.body.hasGluten === "on") {
+        req.body.hasGluten === "true"
+    } else {
+        req.body.hasGluten === "false"
+    }
+    Bread[req.params.arrayIndex] = req.body
+    res.redirect(`/bread/${req.params.arrayIndex}`)
 })
 
 
