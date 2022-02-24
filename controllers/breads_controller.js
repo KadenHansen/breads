@@ -3,68 +3,79 @@ const breads = express.Router()
 const Bread = require("../models/bread.js")
 // const error404 = require("../views/error404.jsx")
 
-
+//GET
 //Index
-breads.get("/", (req, res) => {
-    res.render("index", 
-        {
-            breads: Bread,
-        }
-    )
+breads.get("/", async (req, res) => {
+    Bread.find()
+        .then(foundBreads => {
+            res.render("index", 
+                {
+                    breads: foundBreads
+                }
+            )
+        }).catch(e => console.log("hi")) 
 })
 
-
-breads.post("/", (req, res) => {
-    if(!req.body.image) {
-        req.body.image = "/images/bread.jfif"
-    }
-    if(req.body.hasGluten === "on") {
-        req.body.hasGluten === "true"
-    } else {
-        req.body.hasGluten === "false"
-    }
-    Bread.push(req.body)
-    res.redirect("/bread")
-})
-
-
+//New Bread
 breads.get("/new", (req, res) => {
     res.render("new")
 })
 
-breads.get("/:arrayIndex/edit", (req, res) => {
-        res.render("edit", {
-            bread: Bread[req.params.arrayIndex],
-            index: req.params.arrayIndex
+//Edit Bread
+breads.get("/:id/edit", (req, res) => {
+    Bread.findById(req.params.id)
+        .then(foundBread => {
+            res.render("edit", {
+                bread: foundBread
+            })
         })
+        // res.render("edit", {
+        //     bread: Bread[req.params.id],
+        //     index: req.params.id
+        // })
 })
-
-breads.put("/:arrayIndex", (req, res) => {
-    if(req.body.hasGluten === "on") {
-        req.body.hasGluten === "true"
-    } else {
-        req.body.hasGluten === "false"
-    }
-    Bread[req.params.arrayIndex] = req.body
-    res.redirect(`/bread/${req.params.arrayIndex}`)
-})
-
 
 //Show
-breads.get("/:arrayIndex", (req, res) => {
-    if(Bread[req.params.arrayIndex]) {
-        res.render("show", {
-            bread: Bread[req.params.arrayIndex],
-            index: req.params.arrayIndex
+breads.get("/:id", (req, res) => {
+    Bread.findById(req.params.id)
+        .then(foundBread => {
+            res.render("show", {
+                bread: foundBread
+            })
         })
-    } else {
-        res.render("error404")
-    }
 })
 
-breads.delete("/:arrayIndex", (req, res) => {
-    Bread.splice(req.params.arrayIndex, 1)
+//POST
+breads.post("/", (req, res) => {
+    if(!req.body.image) {
+        req.body.image = undefined
+    }
+    if(req.body.hasGluten === "on") {
+        req.body.hasGluten = true
+    } else {
+        req.body.hasGluten = false
+    }
+    Bread.create(req.body)
     res.redirect("/bread")
+})
+
+breads.put("/:id", (req, res) => {
+    if(req.body.hasGluten === "on") {
+        req.body.hasGluten = true
+    } else {
+        req.body.hasGluten = false
+    }
+    Bread.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(updatedBread => {
+            res.redirect(`/bread/${req.params.id}`)
+        })
+})
+
+breads.delete("/:id", (req, res) => {
+    Bread.findByIdAndDelete(req.params.id)
+        .then(deletedbread => {
+            res.status(303).redirect("/bread")
+        })
 })
 
 module.exports = breads
